@@ -1,4 +1,5 @@
-#include<iostream>
+#include "pch.h"
+
 const int N = 6;
 const int M = 3;
 const int FIRST_ELEMENT = 0;
