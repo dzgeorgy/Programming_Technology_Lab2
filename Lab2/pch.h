@@ -8,6 +8,8 @@
 #define PCH_H
 
 // Добавьте сюда заголовочные файлы для предварительной компиляции
-#include<iostream>
+#include <array>
+
+#include "Prototypes.h"
 
 #endif //PCH_H

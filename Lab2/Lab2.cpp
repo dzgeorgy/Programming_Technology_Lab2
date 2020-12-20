@@ -1,89 +1,60 @@
 #include "pch.h"
 
-const int N = 6;
-const int M = 3;
-const int FIRST_ELEMENT = 0;
-const int SECOND_ELEMENT = 1;
+using namespace System;
 
-using namespace std;
-
-void showMatrix(int matrix[N][M])
+int main(array<String ^> ^args)
 {
-    for(int i = 0; i < N; i++)
+	const auto rows = 3;
+    const auto columns = 6;
+    const auto matrix_a = create_matrix(rows, columns);
+    const auto matrix_b = create_matrix(rows, columns);
+    Console::WriteLine(L"Matrix A is");
+    print_matrix(matrix_a, rows, columns);
+    Console::WriteLine(L"Matrix B is");
+    print_matrix(matrix_b, rows, columns);
+    const auto array_c = find_max_elements_in_column(matrix_a, rows, columns);
+    const auto array_d = find_max_elements_in_column(matrix_b, rows, columns);
+    Console::WriteLine(L"Array C is");
+    print_array(array_c);
+    Console::WriteLine(L"\nArray D is");
+    print_array(array_d);
+}
+
+array<int, 2>^ create_matrix(const int rows, const int columns)
+{
+    const auto matrix = gcnew array<int, 2>(rows, columns);
+    Console::WriteLine(L"Please fill a matrix with size {0}x{1}:", rows, columns);
+    for (auto i = 0; i < rows; ++i)
+        for (auto j = 0; j < columns; ++j)
+            matrix[i,j] = Convert::ToInt32(Console::ReadLine());
+    return matrix;
+}
+
+void print_matrix(const array<int, 2>^ matrix, const int rows, const int columns)
+{
+    for (auto i = 0; i < rows; ++i)
     {
-        for(int j = 0; j < M; j++)
-        {
-            cout << matrix[i][j] << " ";
-        }
-        cout << endl;
+        for (auto j = 0; j < columns; ++j)
+            Console::Write("{0,4} ", matrix[i,j]);
+        Console::Write("\n");
     }
 }
 
-void showArray(int array[M]) {
-    for(int i = 0; i < M; i++) {
-        cout << array[i] << " ";
-    }
-    cout << endl;
+void print_array(const array<int>^ arr)
+{
+    for each (auto item in arr)
+        Console::Write("{0, 4} ", item);
 }
 
-int main()
+array<int>^ find_max_elements_in_column(const array<int, 2>^ matrix, const int rows, const int columns)
 {
-    int firstMatrix[N][M];
-    int secondMatrix[N][M];
-    int firstMatrixColumnMax[M];
-    int secondMatrixColumnMax[M];
-
-    //Matrix input
-    cout << "Enter matrix A:" << endl;
-    for(int i = 0; i < N; i++)
-    {
-        for(int j = 0; j < M; j++)
+    auto arr = gcnew array<int>(columns);
+    for (auto j = 0; j < columns; j++)
+        for (auto i = 0; i < rows; i++)
         {
-            cin >> firstMatrix[i][j];
+            if (i == 0) arr[j] = matrix[i, j];
+            else if (arr[j] < matrix[i, j])
+                arr[j] = matrix[i, j];
         }
-    }
-
-    cout << "Enter matrix B:" << endl;
-    for(int i = 0; i < N; i++)
-    {
-        for(int j = 0; j < M; j++)
-        {
-            cin >> secondMatrix[i][j];
-        }
-    }
-
-    cout << "First matrix:" << endl;
-    showMatrix(firstMatrix);
-
-    cout << "Second matrix:" << endl;
-    showMatrix(secondMatrix);
-
-    for(int i = 0; i < M; i++)
-    {
-        int firstMatrixMax = firstMatrix[FIRST_ELEMENT][i];
-        int secondMatrixMax = secondMatrix[FIRST_ELEMENT][i];
-        for(int j = SECOND_ELEMENT; j < N; j++)
-        {
-            int firstMatrixValue = firstMatrix[j][i];
-            int secondMatrixValue = secondMatrix[j][i];
-            if(firstMatrixValue > firstMatrixMax)
-            {
-                firstMatrixMax = firstMatrixValue;
-            }
-            if(secondMatrixValue > secondMatrixMax)
-            {
-                secondMatrixMax = secondMatrixValue;
-            }
-        }
-        firstMatrixColumnMax[i] = firstMatrixMax;
-        secondMatrixColumnMax[i] = secondMatrixMax;
-    }
-
-    cout << "First matrix maximum columns: ";
-    showArray(firstMatrixColumnMax);
-    cout << "Second matrix maximum columns: ";
-    showArray(secondMatrixColumnMax);
-
-
-    return 0;
+    return arr;
 }
