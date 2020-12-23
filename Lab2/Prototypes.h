@@ -1,7 +1,14 @@
 #pragma once
 
+using namespace System;
+
 /**
-* Ñreates a matrix and returns its descriptor.
+ * Handles UI and main user interaction.
+ */
+void menu();
+
+/**
+* Creates a matrix and returns its descriptor.
 * @param rows - size of first dimension of matrix (read as quantity of lines).
 * @param columns - size of second dimension of matrix (read as quantity of columns).
 * @return descriptor of created matrix
@@ -18,12 +25,12 @@ void print_matrix(const array<int, 2>^ matrix, const int rows, const int columns
 
 /**
 * Prints out given array.
-* @param array - const descriptor of array.
+* @param arr - const descriptor of array.
 */
 void print_array(const array<int>^ arr);
 
 /**
-* Finds max element in every columnn of matrix and returns an array of these elements.
+* Finds max element in every column of matrix and returns an array of these elements.
 * @param matrix - const descriptor of matrix.
 * @param rows - size of first dimension of matrix (read as quantity of lines).
 * @param columns - size of second dimension of matrix (read as quantity of columns).
